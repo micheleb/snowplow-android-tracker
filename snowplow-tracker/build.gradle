@@ -1,12 +1,10 @@
-plugins {
-    id "com.jfrog.bintray" version "1.5"
-}
 
 apply plugin: 'com.android.library'
 apply plugin: 'jacoco'
 apply plugin: 'maven-publish'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.github.kt3k.coveralls'
+apply plugin: 'com.vanniktech.maven.publish'
 
 jacoco {
     toolVersion = "0.8.5"
@@ -106,6 +104,79 @@ coveralls {
     jacocoReportPath "$buildDir/reports/coverage/debug/report.xml"
 }
 
+mavenPublish {
+    // ...
+    nexus {
+        baseUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/" // defaults to "https://oss.sonatype.org/service/local/"
+        stagingProfile = "com.snowplowanalytics" // defaults to the SONATYPE_STAGING_PROFILE Gradle property or the GROUP Gradle Property if not set
+        repositoryUsername = project.findProperty('sonaUser') ?: System.getenv('SONA_USER') // defaults to the mavenCentralRepositoryUsername Gradle Property
+        repositoryPassword = project.findProperty('sonaPass') ?: System.getenv('SONA_PASS') // defaults to the mavenCentralRepositoryPassword Gradle Property
+    }
+}
+
+/*
+publishing {
+    publications {
+        release(MavenPublication) {
+            // The coordinates of the library, being set from variables that
+            // we'll set up in a moment
+            groupId 'com.snowplowanalytics'
+            artifactId 'snowplow-android-tracker'
+            PUBLISH_VERSION "$project.version"
+
+            // Two artifacts, the `aar` and the sources
+            artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
+            //artifact androidSourcesJar
+
+            // Self-explanatory metadata for the most part
+            pom {
+                name = 'snowplow-android-tracker'
+                description = 'Snowplow event tracker for Android 16+. Add analytics to your apps and games.'
+                url = 'https://github.com/snowplow/snowplow-android-tracker'
+                inceptionYear = '2014'
+
+                packaging = 'aar'
+                groupId = 'com.snowplowanalytics'
+
+                licenses {
+                    license {
+                        name = 'The Apache Software License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution = 'repo'
+                    }
+                }
+                scm {
+                    connection = 'https://github.com/snowplow/snowplow-android-tracker.git'
+                    url = 'https://github.com/snowplow/snowplow-android-tracker'
+                }
+                developers {
+                    developer {
+                        name = 'Snowplow Analytics'
+                    }
+                }
+            }
+        }
+    }
+    repositories {
+        // The repository to publish to, Sonatype/MavenCentral
+        maven {
+            // This is an arbitrary name, you may also use "mavencentral" or
+            // any other name that's descriptive for you
+            name = "sonatype"
+
+            url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+
+            // The username and password we've fetched earlier
+            credentials {
+                username project.findProperty('sonaUser') ?: System.getenv('SONA_USER')
+                password project.findProperty('sonaPass') ?: System.getenv('SONA_PASS')
+            }
+        }
+    }
+}
+*/
+
+/*
 install {
     repositories.mavenInstaller {
         pom.artifactId = 'snowplow-android-tracker'
@@ -162,6 +233,7 @@ bintray {
         version.name = "$project.version"
     }
 }
+*/
 
 repositories {
     mavenCentral()

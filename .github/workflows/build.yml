@@ -13,8 +13,8 @@ jobs:
           # Test against the API 17, as the API 16 raises an error:
           # `com.android.ddmlib.InstallException: Unknown failure: Error: Unknown option: -d`
           # `usage: pm list packages [-f] [-d] [-e] [-s] [-3] [-i] [-u] [FILTER]`
-          - 17 
-          - 24
+#          - 17 
+#          - 24
           - 29
 
     steps:
@@ -24,26 +24,8 @@ jobs:
       - name: Validate Gradle Wrapper
         uses: gradle/wrapper-validation-action@v1
 
-      - name: Run Tests
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: ${{ matrix.api-level }}
-          script: |
-            adb logcat -c
-            adb logcat > logcat.log &
-            ./gradlew createDebugCoverageReport
-        env:
-          API_LEVEL: ${{ matrix.api-level }}
-
-      - name: Load logs if failed
-        if: ${{ failure() }}
-        uses: actions/upload-artifact@v2
-        with: 
-          name: logcat-${{ matrix.api-level }}
-          path: logcat.log
-
-      - name: Load code coverage report
-        if: success() && matrix.api-level == '24'
+      - name: Test upload
         env: 
-          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-        run: ./gradlew coveralls
+          SONA_USER: ${{ secrets.SONA_USER }}
+          SONA_PASS: ${{ secrets.SONA_PASS }}
+        run: ./gradlew publish --no-parallel closeAndReleaseRepository
