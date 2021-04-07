@@ -107,7 +107,7 @@ coveralls {
 mavenPublish {
     // ...
     nexus {
-        baseUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/" // defaults to "https://oss.sonatype.org/service/local/"
+        baseUrl = "https://oss.sonatype.org/service/local/" // defaults to "https://oss.sonatype.org/service/local/"
         stagingProfile = "com.snowplowanalytics" // defaults to the SONATYPE_STAGING_PROFILE Gradle property or the GROUP Gradle Property if not set
         repositoryUsername = project.findProperty('sonaUser') ?: System.getenv('SONA_USER') // defaults to the mavenCentralRepositoryUsername Gradle Property
         repositoryPassword = project.findProperty('sonaPass') ?: System.getenv('SONA_PASS') // defaults to the mavenCentralRepositoryPassword Gradle Property
