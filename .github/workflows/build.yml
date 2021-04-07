@@ -6,6 +6,10 @@ jobs:
   test:
     runs-on: macos-latest
 
+    env: 
+      SONA_USER: ${{ secrets.SONA_USER }}
+      SONA_PASS: ${{ secrets.SONA_PASS }}
+
     strategy:
       fail-fast: false
       matrix:
@@ -25,8 +29,5 @@ jobs:
         uses: gradle/wrapper-validation-action@v1
 
       - name: Test upload
-        env: 
-          SONA_USER: ${{ secrets.SONA_USER }}
-          SONA_PASS: ${{ secrets.SONA_PASS }}
 #        run: ./gradlew publish --no-parallel closeAndReleaseRepository
         run: ./gradlew uploadArchives
