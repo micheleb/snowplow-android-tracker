@@ -28,4 +28,5 @@ jobs:
         env: 
           SONA_USER: ${{ secrets.SONA_USER }}
           SONA_PASS: ${{ secrets.SONA_PASS }}
-        run: ./gradlew publish --no-parallel closeAndReleaseRepository
+#        run: ./gradlew publish --no-parallel closeAndReleaseRepository
+        run: ./gradlew uploadArchives
