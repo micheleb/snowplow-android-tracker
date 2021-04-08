@@ -105,7 +105,7 @@ coveralls {
 }
 
 signing {
-    useInMemoryPgpKeys(System.getenv('SONA_PGP_SECRET'), System.getenv('SONA_PGP_PASSPHRASE'))
+    useInMemoryPgpKeys(System.getenv('SONA_PGP_PASSPHRASE'), System.getenv('SONA_PGP_SECRET'))
 //    sign configurations.archives
 }
 
