@@ -35,5 +35,5 @@ jobs:
 #        run: ./gradlew uploadArchives --no-parallel closeAndReleaseRepository
 #        run: ./gradlew closeAndReleaseRepository
         run: |
-          ./gradlew uploadArchives
+          ./gradlew publish
           ./gradlew closeAndReleaseRepository
