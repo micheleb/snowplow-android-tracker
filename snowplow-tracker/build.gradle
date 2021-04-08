@@ -104,6 +104,13 @@ coveralls {
     jacocoReportPath "$buildDir/reports/coverage/debug/report.xml"
 }
 
+signing {
+    def signingKey = System.getenv('SONA_PGP_SECRET')
+    def signingPass = System.getenv('SONA_PGP_PASSPHRASE')
+    useInMemoryPgpKeys(signingKey, signingPass)
+    sign configurations.archives
+}
+
 mavenPublish {
     targets {
         uploadArchives {
