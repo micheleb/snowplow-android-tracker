@@ -30,6 +30,6 @@ jobs:
 
       - name: Test upload
 #        run: ./gradlew publish --no-parallel closeAndReleaseRepository
-        run: ./gradlew uploadArchives closeAndReleaseRepository
+        run: ./gradlew uploadArchives # closeAndReleaseRepository
 #        run: ./gradlew closeAndReleaseRepository
 
