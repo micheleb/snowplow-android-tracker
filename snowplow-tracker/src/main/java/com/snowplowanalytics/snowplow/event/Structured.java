@@ -38,6 +38,8 @@ public class Structured extends AbstractPrimitive {
     public String property;
     @Nullable
     public Double value;
+    @Nullable
+    public String pageUrl;
 
     public static abstract class Builder<T extends Builder<T>> extends AbstractEvent.Builder<T> {
 
@@ -46,6 +48,7 @@ public class Structured extends AbstractPrimitive {
         private String label;
         private String property;
         private Double value;
+        private String pageUrl;
 
         /**
          * @param category Category of the event
@@ -97,6 +100,16 @@ public class Structured extends AbstractPrimitive {
             return self();
         }
 
+        /**
+         * @param pageUrl the current page URL
+         * @return itself
+         */
+        @NonNull
+        public T pageUrl(@NonNull String pageUrl) {
+            this.pageUrl = pageUrl;
+            return self();
+        }
+
         @NonNull
         public Structured build() {
             return new Structured(this);
@@ -130,6 +143,7 @@ public class Structured extends AbstractPrimitive {
         this.label = builder.label;
         this.property = builder.property;
         this.value = builder.value;
+        this.pageUrl = builder.pageUrl;
     }
 
     public Structured(@NonNull String category, @NonNull String action) {
@@ -166,12 +180,13 @@ public class Structured extends AbstractPrimitive {
     @NonNull
     @Override
     public Map<String, Object> getDataPayload() {
-        HashMap<String, Object> payload = new HashMap<>(5);
+        HashMap<String, Object> payload = new HashMap<>(6);
         payload.put(Parameters.SE_CATEGORY, category);
         payload.put(Parameters.SE_ACTION, action);
         if (label != null) payload.put(Parameters.SE_LABEL, label);
         if (property != null) payload.put(Parameters.SE_PROPERTY, property);
         if (value != null) payload.put(Parameters.SE_VALUE, Double.toString(value));
+        if (pageUrl != null) payload.put(Parameters.PAGE_URL, pageUrl);
         return payload;
     }
 
