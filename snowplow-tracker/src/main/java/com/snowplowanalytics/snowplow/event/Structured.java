@@ -40,6 +40,8 @@ public class Structured extends AbstractPrimitive {
     public Double value;
     @Nullable
     public String pageUrl;
+    @Nullable
+    private String referrer;
 
     public static abstract class Builder<T extends Builder<T>> extends AbstractEvent.Builder<T> {
 
@@ -49,6 +51,7 @@ public class Structured extends AbstractPrimitive {
         private String property;
         private Double value;
         private String pageUrl;
+        private String referrer;
 
         /**
          * @param category Category of the event
@@ -110,6 +113,16 @@ public class Structured extends AbstractPrimitive {
             return self();
         }
 
+        /**
+         * @param referrer the page URL from which we're coming
+         * @return itself
+         */
+        @NonNull
+        public T referrer(@NonNull String referrer) {
+            this.referrer = referrer;
+            return self();
+        }
+
         @NonNull
         public Structured build() {
             return new Structured(this);
@@ -144,6 +157,7 @@ public class Structured extends AbstractPrimitive {
         this.property = builder.property;
         this.value = builder.value;
         this.pageUrl = builder.pageUrl;
+        this.referrer = builder.referrer;
     }
 
     public Structured(@NonNull String category, @NonNull String action) {
@@ -187,6 +201,7 @@ public class Structured extends AbstractPrimitive {
         if (property != null) payload.put(Parameters.SE_PROPERTY, property);
         if (value != null) payload.put(Parameters.SE_VALUE, Double.toString(value));
         if (pageUrl != null) payload.put(Parameters.PAGE_URL, pageUrl);
+        if (referrer != null) payload.put(Parameters.PAGE_REFR, referrer);
         return payload;
     }
 
